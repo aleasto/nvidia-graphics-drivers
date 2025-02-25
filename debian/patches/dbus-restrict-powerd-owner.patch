@@ -1,0 +1,20 @@
+Description: Restrict ownership of the nvidia.powerd.server bus name
+ Allow only the root user to own the nvidia.powerd.server name.
+ Prevents local users impersonating the service.
+Author: Alessandro Astone <alessandro.astone@canonical.com>
+Last-Update: 2025-02-25
+
+--- ./NVIDIA-Linux/nvidia-dbus.conf	2024-10-10 13:49:33.000000000 +0200
++++ ./NVIDIA-Linux/nvidia-dbus.conf.new	2025-02-25 15:50:28.626117626 +0100
+@@ -1,7 +1,10 @@
+ <busconfig>
+   <type>system</type>
+-  <policy context="default">
++  <policy user="root">
+     <allow own="nvidia.powerd.server"/>
++  </policy>
++
++  <policy context="default">
+     <allow send_requested_reply="true" send_type="method_return"/>
+     <allow send_requested_reply="true" send_type="error"/>
+     <allow receive_requested_reply="true" receive_type="method_return"/>
